@@ -1,358 +1,142 @@
-# Laboratory 03 — Colecții (`Map`), Enum-uri, Excepții
+﻿# Laboratory 03 — Moștenire, Clase abstracte, Interfețe, Colecții
 
-> **Pachet:** `com.pao.laboratory03` · **Curs:** 07–08 · **Pre-rechizite:** [Laboratory 02](src/com/pao/laboratory02/Readme.md)
+## Demo-uri (citește și rulează)
 
----
-
-<details open>
-<summary><h2>Obiective</h2></summary>
-
-1. **`Map`** — `HashMap`, `TreeMap`: perechi cheie-valoare
-2. **Enum-uri** — constante cu câmpuri, constructori, metode abstracte per constantă
-3. **Excepții** — ierarhia `Throwable`, checked vs unchecked, `try-catch-finally`, excepții custom
-4. **Exercițiu integrator** — `Map` + `enum` + excepții custom + Singleton
-
-> ⚠️ De data aceasta **NU primiți clase model gata făcute**. Creați totul de la zero — simulează munca pe proiectul individual.
-
-</details>
+| Pachet | Ce demonstrează |
+|--------|-----------------|
+| [abstractclasses/](src/com/pao/laboratory03/abstractclasses) | Clasă abstractă, moștenire, polimorfism, upcasting |
+| [equalshashcode/](src/com/pao/laboratory03/equalshashcode) | `==` vs `.equals()`, `hashCode`, comportament `HashSet` |
+| [immutable/](src/com/pao/laboratory03/immutable) | Clasă imutabilă: `final class`, `final` fields, fără setteri |
+| [strings/](src/com/pao/laboratory03/strings) | `String` vs `StringBuilder` vs `StringBuffer` + benchmark |
+| [collections/](src/com/pao/laboratory03/collections) | `ArrayList`, `HashSet`, `TreeSet` — operații și parcurgere |
 
 ---
 
 ## Exerciții
 
-| # | Exercițiu | Timp | Ce creezi |
-|---|-----------|------|-----------|
-| 1 | HashMap + TreeMap | ~20 min | Totul în [collections/Main.java](src/com/pao/laboratory03/collections/Main.java) |
-| 2 | Enum-uri | ~20 min | `Priority.java` + [enums/Main.java](src/com/pao/laboratory03/enums/Main.java) |
-| 3 | Excepții custom | ~25 min | `InvalidAgeException.java`, `DuplicateEntryException.java` + [exceptions/Main.java](src/com/pao/laboratory03/exceptions/Main.java) |
-| 4 | Integrator: Studenți + Note | ~35 min | 6 clase de la zero + [exercise/Main.java](src/com/pao/laboratory03/exercise/Main.java) |
-| 5 | **Bonus:** Task Manager + Audit | ~45 min | ~8 clase de la zero + [bonus/Main.java](src/com/pao/laboratory03/bonus/Main.java) |
+| # | Exercițiu | Timp estimat | Fișiere de completat |
+|---|-----------|--------------|----------------------|
+| 1 | Forme geometrice | ~20 min | [Circle.java](src/com/pao/laboratory03/exercise1/Circle.java), [Rectangle.java](src/com/pao/laboratory03/exercise1/Rectangle.java) |
+| 2 | equals/hashCode Student | ~15 min | [Student.java](src/com/pao/laboratory03/exercise2/Student.java) |
+| 3 | Angajați + ArrayList | ~25 min | [Programator.java](src/com/pao/laboratory03/exercise3/model/Programator.java), [Manager.java](src/com/pao/laboratory03/exercise3/model/Manager.java), [AngajatService.java](src/com/pao/laboratory03/exercise3/service/AngajatService.java) |
+| 4 | Zoo (bonus) | ~30 min | [Dog.java](src/com/pao/laboratory03/exercise4/model/Dog.java), [Cat.java](src/com/pao/laboratory03/exercise4/model/Cat.java), [Parrot.java](src/com/pao/laboratory03/exercise4/model/Parrot.java), [ZooService.java](src/com/pao/laboratory03/exercise4/service/ZooService.java) |
 
 ---
 
-### Exercițiul 1 — HashMap și TreeMap
+### Exercițiul 1 — Forme geometrice
 
-> 📖 **Exemplu:** Rulează mai întâi [collections/ExampleMap.java](src/com/pao/laboratory03/collections/ExampleMap.java) pentru a vedea cum funcționează Map-urile.
+Implementează `Circle` și `Rectangle` care extind `Shape`.
 
-Lucrează în [collections/Main.java](src/com/pao/laboratory03/collections/Main.java) — cerințele sunt în Javadoc.
-
-**Concepte cheie:**
-- `HashMap<K, V>` — acces O(1), ordine nepredictibilă
-- `TreeMap<K, V>` — chei **sortate**, acces O(log n)
-- `put`, `get`, `getOrDefault`, `keySet`, `values`, `entrySet`
-- `Map<String, List<String>>` — map cu liste ca valori
+**Fișiere:** [Circle.java](src/com/pao/laboratory03/exercise1/Circle.java), [Rectangle.java](src/com/pao/laboratory03/exercise1/Rectangle.java)  
+**Model:** [Shape.java](src/com/pao/laboratory03/exercise1/Shape.java) (dat)  
+**Test:** [Main.java](src/com/pao/laboratory03/exercise1/Main.java) (nu modifica)
 
 <details>
 <summary><b>Output așteptat</b></summary>
 
 ```
-=== PARTEA A: HashMap — frecvența cuvintelor ===
-Frecvență: {python=2, c++=2, java=3, rust=1, go=1}
-Conține 'rust'? true
-Chei: [python, c++, java, rust, go]
-Valori: [2, 2, 3, 1, 1]
-python -> 2
-c++ -> 2
-java -> 3
-rust -> 1
-go -> 1
+=== Forme geometrice ===
+Circle [area=78.54, perimeter=31.42]
+Rectangle [area=24.00, perimeter=20.00]
+Circle [area=12.57, perimeter=12.57]
+Rectangle [area=25.00, perimeter=20.00]
 
-=== PARTEA B: TreeMap — sortare automată ===
-Sortat: {c++=2, go=1, java=3, python=2, rust=1}
-Prima cheie: c++
-Ultima cheie: rust
+=== Polimorfism — aceeași metodă, comportament diferit ===
+Circle     → aria = 78.54
+Rectangle  → aria = 24.00
+Circle     → aria = 12.57
+Rectangle  → aria = 25.00
 
-=== PARTEA C: Map cu obiecte ===
-Studenți la PAOJ: [Ana, Mihai, Ion]
-Studenți la BD (actualizat): [Ana, Elena, George]
+=== Suma ariilor tuturor formelor ===
+Total arii: 140.10
 ```
 
 </details>
 
 ---
 
-### Exercițiul 2 — Enum-uri cu câmpuri și metode
+### Exercițiul 2 — equals/hashCode Student
 
-> 📖 **Exemplu:** Rulează mai întâi [enums/ExampleEnum.java](src/com/pao/laboratory03/enums/ExampleEnum.java) pentru a vedea enum-uri simple și cu metode abstracte.
+Adaugă `equals(Object o)` și `hashCode()` în `Student` — doi studenți sunt egali dacă au **același id**.
 
-Creează `Priority.java` în [enums/](src/com/pao/laboratory03/enums) apoi completează [enums/Main.java](src/com/pao/laboratory03/enums/Main.java).
-
-**Reține:**
-- Enum = set fix de constante singleton
-- Pot avea câmpuri, constructor **privat**, getteri, metode abstracte
-- `values()`, `valueOf("STRING")`, `name()`, `ordinal()`
-- Comparare cu `==` (nu `.equals()`)
+**Fișier:** [Student.java](src/com/pao/laboratory03/exercise2/Student.java)  
+**Model:** [Book.java](src/com/pao/laboratory03/equalshashcode/Book.java) (dat)  
+**Test:** [Main.java](src/com/pao/laboratory03/exercise2/Main.java) (nu modifica)
 
 <details>
 <summary><b>Output așteptat</b></summary>
 
 ```
-=== Toate prioritățile ===
-🟢 LOW (level=1, color=green)
-🟡 MEDIUM (level=2, color=yellow)
-🟠 HIGH (level=3, color=orange)
-🔴 CRITICAL (level=4, color=red)
-
-=== Switch pe prioritate ===
-⚠️ Atenție! Prioritate ridicată!
-
-=== valueOf ===
-Priority.valueOf("HIGH") = HIGH
-
-=== Comparare enum ===
-HIGH == HIGH? true
-HIGH == LOW? false
-
-=== name() și ordinal() ===
-LOW: name=LOW, ordinal=0
-MEDIUM: name=MEDIUM, ordinal=1
-HIGH: name=HIGH, ordinal=2
-CRITICAL: name=CRITICAL, ordinal=3
+=== VERIFICARE ===
+Test 1 (equals):   PASSED ✓
+Test 2 (hashCode):  PASSED ✓
+Test 3 (HashSet):   PASSED ✓
 ```
 
 </details>
 
 ---
 
-### Exercițiul 3 — Excepții custom
+### Exercițiul 3 — Angajați + ArrayList
 
-> 📖 **Exemplu:** Rulează mai întâi [exceptions/ExampleExceptions.java](src/com/pao/laboratory03/exceptions/ExampleExceptions.java) pentru a vedea try-catch, custom exceptions, multi-catch.
+Implementează `Programator` și `Manager` (extind `Angajat`) + completează `AngajatService`.
 
-Creează `InvalidAgeException.java` și `DuplicateEntryException.java` în [exceptions/](src/com/pao/laboratory03/exceptions), apoi completează [exceptions/Main.java](src/com/pao/laboratory03/exceptions/Main.java).
+**Fișiere:** [Programator.java](src/com/pao/laboratory03/exercise3/model/Programator.java), [Manager.java](src/com/pao/laboratory03/exercise3/model/Manager.java), [AngajatService.java](src/com/pao/laboratory03/exercise3/service/AngajatService.java)  
+**Model:** [Angajat.java](src/com/pao/laboratory03/exercise3/model/Angajat.java) (dat)  
+**Test:** [Main.java](src/com/pao/laboratory03/exercise3/Main.java) (nu modifica)
 
-<details>
-<summary><b>Ierarhia excepțiilor</b></summary>
-
-```
-                    Throwable
-                   /         \
-             Exception       Error (NU se prind)
-              /       \
-  checked exceptions   RuntimeException (unchecked)
-  (IOException)         /      |       \
-                  NullPointer  IndexOutOf  IllegalArgument
-                                            \
-                                     excepțiile tale custom
-```
-
-| Tip | Compilatorul forțează? | Exemple |
-|-----|----------------------|---------|
-| **Checked** | ✅ Da | `IOException`, `SQLException` |
-| **Unchecked** | ❌ Nu | `NullPointerException`, `IllegalArgumentException` |
-| **Error** | ❌ Nu se prind | `OutOfMemoryError`, `StackOverflowError` |
-
-</details>
-
-**Reține:**
-- `throw new MyException("mesaj")` — aruncă
-- `throws MyException` — declară în semnătură
-- `catch (Ex1 | Ex2 e)` — multi-catch
-- Ordinea: **specific → general**
-- `finally` — se execută **mereu**
+**Formule:**
+- `Programator.salariuTotal()` = `getSalariuBaza() * 1.5`
+- `Manager.salariuTotal()` = `getSalariuBaza() * 2 + nrSubordonati * 100`
 
 <details>
 <summary><b>Output așteptat</b></summary>
 
 ```
-=== a) Unchecked — NullPointerException ===
-Prins: Cannot invoke "String.length()" because "s" is null
-Finally se execută mereu!
+=== Adăugare angajați ===
+Angajat adăugat: Ana
+Angajat adăugat: Mihai
+Angajat adăugat: Ion
+Angajat adăugat: Elena
 
-=== b) Custom exceptions ===
-InvalidAgeException: Vârsta -5 nu este validă (0-150)
-DuplicateEntryException: 'Ana' există deja în listă
+=== Lista angajaților ===
+1. Programator{name='Ana', salariuBaza=5000.0, salariuTotal=7500.00}
+2. Programator{name='Mihai', salariuBaza=4500.0, salariuTotal=6750.00}
+3. Manager{name='Ion', salariuBaza=6000.0, salariuTotal=13000.00}
+4. Manager{name='Elena', salariuBaza=7000.0, salariuTotal=14500.00}
 
-=== c) Multi-catch ===
-Excepție prinsă: Vârsta 200 nu este validă (0-150)
+=== Total salarii ===
+Suma salariilor: 41750.00 RON
 
-=== d) Catch ordering (specific → general) ===
-InvalidAgeException prinsă specific: Vârsta -1 nu este validă (0-150)
-
-=== e) Throw vs throws ===
-Metoda process() a aruncat: Vârsta 999 nu este validă (0-150)
+=== VERIFICARE ===
+Test 1 (Programator): PASSED ✓
+Test 2 (Manager):     PASSED ✓
+Test 3 (Total):       PASSED ✓
 ```
 
 </details>
 
 ---
 
-### Exercițiul 4 (Integrator) — Gestiune studenți + note
+### Exercițiul 4 — Grădina Zoologică (bonus)
 
-Creează **6 clase de la zero** apoi completează TODO-urile din [exercise/Main.java](src/com/pao/laboratory03/exercise/Main.java). Specs complete în Javadoc.
+Implementează `Dog`, `Cat`, `Parrot` (extind `Animal`) + completează `ZooService` (Singleton cu 4 metode).
 
-| # | Clasă | Pachet | Tip |
-|---|-------|--------|-----|
-| 1 | `Subject.java` | [exercise/model/](src/com/pao/laboratory03/exercise/model) | Enum (PAOJ, BD, SO, RC) cu `fullName` + `credits` |
-| 2 | `Student.java` | [exercise/model/](src/com/pao/laboratory03/exercise/model) | Clasă cu `Map<Subject, Double> grades` |
-| 3 | `InvalidStudentException.java` | [exercise/exception/](src/com/pao/laboratory03/exercise/exception) | extends RuntimeException |
-| 4 | `InvalidGradeException.java` | [exercise/exception/](src/com/pao/laboratory03/exercise/exception) | extends RuntimeException |
-| 5 | `StudentNotFoundException.java` | [exercise/exception/](src/com/pao/laboratory03/exercise/exception) | extends RuntimeException |
-| 6 | `StudentService.java` | [exercise/service/](src/com/pao/laboratory03/exercise/service) | Singleton cu `List<Student>` + 6 metode |
+**Fișiere:** [Dog.java](src/com/pao/laboratory03/exercise4/model/Dog.java), [Cat.java](src/com/pao/laboratory03/exercise4/model/Cat.java), [Parrot.java](src/com/pao/laboratory03/exercise4/model/Parrot.java), [ZooService.java](src/com/pao/laboratory03/exercise4/service/ZooService.java)  
+**Model:** [Animal.java](src/com/pao/laboratory03/exercise4/model/Animal.java), [Describable.java](src/com/pao/laboratory03/exercise4/model/Describable.java) (date)  
+**Test:** [Main.java](src/com/pao/laboratory03/exercise4/Main.java) — meniu interactiv (nu modifica)
 
 <details>
 <summary><b>Exemplu interacțiune</b></summary>
 
 ```
-=== Sistem Gestiune Studenți ===
+Alege opțiunea: 2
+Nume: Rex
+Vârsta: 5
+Adăugat: Dog{name='Rex', age=5}
 
---- Meniu ---
-1. Adaugă student
-2. Adaugă notă
-3. Afișează toți studenții
-4. Top studenți (după medie)
-5. Media pe materie
-0. Ieșire
-Opțiune: 1
-Nume: Ana
-Vârsta: 20
-Student adăugat cu succes!
-
-Opțiune: 2
-Nume student: Ana
-Materie (PAOJ, BD, SO, RC): PAOJ
-Nota (1-10): 9.5
-Notă adăugată!
-
-Opțiune: 3
-1. Student{name='Ana', age=20, avg=8.75}
-   PAOJ = 9.5
-   BD = 8.0
-
-Opțiune: 4
-=== Top studenți ===
-1. Ana — media: 8.75
-2. Mihai — media: 7.00
-
-Opțiune: 5
-=== Media pe materie ===
-PAOJ: 8.25
-BD: 8.00
-
-Opțiune: 1
-Nume: Invalid
-Vârsta: -5
-Eroare: Vârsta -5 nu este validă (18-60)
-
-Opțiune: 0
-La revedere!
-```
-
-</details>
-
-<details>
-<summary><b>Hint-uri</b></summary>
-
-**Subject.java (enum):**
-```java
-public enum Subject {
-    PAOJ("Programare Avansată pe Obiecte", 6),
-    BD("Baze de Date", 5),
-    // ...
-    ;
-    // câmpuri, constructor, getteri
-}
-```
-
-**Student.java — getAverage():**
-```java
-public double getAverage() {
-    if (grades.isEmpty()) return 0;
-    double sum = 0;
-    for (double g : grades.values()) sum += g;
-    return sum / grades.size();
-}
-```
-
-**StudentService.java — Singleton:**
-```java
-private static StudentService instance;
-private StudentService() { ... }
-public static StudentService getInstance() { ... }
-```
-
-**StudentService.java — getAveragePerSubject():**
-```java
-Map<Subject, Double> result = new HashMap<>();
-for (Subject subject : Subject.values()) {
-    // colectează note de la toți studenții care au notă la 'subject'
-}
-```
-
-</details>
-
----
-
-### Exercițiul 5 (Bonus) — Task Manager cu Audit Log
-
-Construiește un sistem complet **fără schelet de cod** — primești doar cerințele în [bonus/Main.java](src/com/pao/laboratory03/bonus/Main.java). Tu decizi structura claselor și organizarea pachetelor.
-
-**Ce trebuie creat (~8 clase):**
-
-| Tip | Clase | Ce e diferit față de Ex. 4 |
-|-----|-------|---------------------------|
-| Model | `Task` (id, title, status, priority, assignee) | ID generat automat ("T001", "T002"...) |
-| Enum | `Status` cu metodă abstractă `canTransitionTo(Status)` | **State machine**: TODO→IN_PROGRESS→DONE, nu poți merge înapoi |
-| Enum | `Priority` cu `calculateScore(int baseDays)` | Enum cu **logică de calcul**, nu doar date |
-| Excepții | `DuplicateTaskException`, `TaskNotFoundException`, `InvalidTransitionException` | `InvalidTransitionException` are **câmpuri extra** (fromStatus, toStatus) |
-| Serviciu | `TaskService` (Singleton) cu **2 Map-uri** + **audit log** | `Map<String, Task>` + `Map<Priority, List<Task>>` + `List<String>` |
-
-**Ce face acest exercițiu mai dificil:**
-- Enum cu **state machine** (tranziții valide/invalide)
-- Excepție custom cu **câmpuri suplimentare** (nu doar message)
-- Serviciu cu **structuri de date multiple** sincronizate
-- **Audit log** — pattern real din aplicații enterprise
-- **Scor de urgență** calculat din enum
-- **Organizare liberă** — tu decizi pachetele
-
-<details>
-<summary><b>Hint-uri</b></summary>
-
-**Status enum cu canTransitionTo:**
-```java
-public enum Status {
-    TODO {
-        @Override public boolean canTransitionTo(Status next) {
-            return next == IN_PROGRESS || next == CANCELLED;
-        }
-    },
-    IN_PROGRESS {
-        @Override public boolean canTransitionTo(Status next) {
-            return next == DONE || next == CANCELLED;
-        }
-    },
-    DONE {
-        @Override public boolean canTransitionTo(Status next) { return false; }
-    },
-    CANCELLED {
-        @Override public boolean canTransitionTo(Status next) { return false; }
-    };
-
-    public abstract boolean canTransitionTo(Status next);
-}
-```
-
-**ID automat:**
-```java
-private int nextId = 1;
-String id = String.format("T%03d", nextId++);  // "T001", "T002"...
-```
-
-**Audit log:**
-```java
-private final List<String> auditLog = new ArrayList<>();
-// la fiecare operație:
-auditLog.add("[ADD] " + task.getId() + ": '" + task.getTitle() + "' (" + task.getPriority() + ")");
-```
-
-**getStatusSummary() — numără pe fiecare status:**
-```java
-Map<Status, Long> summary = new HashMap<>();
-for (Status s : Status.values()) {
-    long count = tasksById.values().stream()
-        .filter(t -> t.getStatus() == s).count();
-    // sau cu for clasic
-    summary.put(s, count);
-}
+Alege opțiunea: 1
+  1. Rex (varsta: 5 ani) face: Ham!
 ```
 
 </details>
@@ -362,226 +146,503 @@ for (Status s : Status.values()) {
 <details open>
 <summary><h2>Cheat Sheet</h2></summary>
 
-| Concept | Sintaxă |
-|---------|---------|
-| `HashMap<K,V>` | O(1), ordine nepredictibilă |
-| `TreeMap<K,V>` | **Sortat** după cheie |
-| `map.getOrDefault(k, def)` | Returnează valoare sau default |
-| `map.entrySet()` | `for (Map.Entry<K,V> e : map.entrySet())` |
-| `enum` cu câmpuri | Constructor **privat**, getteri, metode abstracte |
-| `values()` / `valueOf("X")` | Toate constantele / String → enum |
-| `try-catch-finally` | `try { } catch (Ex e) { } finally { }` |
-| `throw` / `throws` | Aruncă excepție / Declară în semnătură |
-| Multi-catch | `catch (Ex1 \| Ex2 e)` |
-| Custom exception | `class MyEx extends RuntimeException { MyEx(String m) { super(m); } }` |
+| Concept | Reține |
+|---------|--------|
+| `abstract class` | Nu se instanțiază; metode abstracte + concrete |
+| `interface` | Contract pur; o clasă poate implementa mai multe |
+| `extends` + `super` | Moștenire de la 1 clasă; `super(args)` = constructor părinte |
+| `@Override` | Subclasa redefinește comportamentul |
+| Polimorfism | Variabilă tip-părinte → comportament tip-real |
+| `equals`/`hashCode` | Suprascrie ambele; obligatoriu pt `HashSet`/`HashMap` |
+| Clasă imutabilă | `final class`, `final` fields, fără setteri |
+| `StringBuilder` | Folosește-l pt concatenări repetate |
+| `ArrayList` | Listă dinamică cu index — înlocuiește array-uri |
+| `HashSet` | Fără duplicate — necesită `equals`/`hashCode` |
+| `TreeSet` | Fără duplicate + sortat automat |
 
 </details>
 
 ---
 
 ## Ce urmează la Laboratory 04?
-- Generics (`<T>`, bounded types, wildcards)
-- Stream API & lambdas (introducere)
-- Design patterns (Factory, Strategy)
+- `Map` (`HashMap`, `TreeMap`)
+- `Comparable` cu `Collections.sort`
+- Enum-uri
+- Introducere excepții
 
----
 
-## FAQ
+## FAQ (Întrebări Frecvente)
 
 <details>
-<summary><b>1. <code>HashMap</code> vs <code>TreeMap</code> — când pe care?</b></summary>
+<summary><b>1. Ce este <code>super</code>? Când poate fi folosit?</b></summary>
 
-| | `HashMap` | `TreeMap` |
-|---|----------|-----------|
-| **Ordine** | Nepredictibilă | Chei **sortate** |
-| **Performanță** | O(1) | O(log n) |
-| **Null keys** | ✅ 1 cheie null | ❌ Nu |
+`super` este un keyword folosit pentru a accesa membri (constructor, metode, câmpuri) din clasa părinte. Are trei utilizări principale:
 
-**Frecvența elementelor:**
+**a) Apelarea constructorului părinte** — `super(args)` **trebuie să fie prima instrucțiune** în constructor:
 ```java
-Map<String, Integer> freq = new HashMap<>();
-for (String word : words) {
-    freq.put(word, freq.getOrDefault(word, 0) + 1);
+// Exemplu din Circle.java
+public Circle(double radius) {
+    super("Circle");  // apelează Shape(String name)
+    this.radius = radius;
 }
 ```
 
-**Map cu liste:**
+Alte exemple din laborator:
+- [MySqlConnection.java](src/com/pao/laboratory03/abstractclasses/MySqlConnection.java) — `super(url)` pentru [DBConnection](src/com/pao/laboratory03/abstractclasses/DBConnection.java)
+- [Programator.java](src/com/pao/laboratory03/exercise3/model/Programator.java) — `super(name, salariuBaza)` pentru [Angajat](src/com/pao/laboratory03/exercise3/model/Angajat.java)
+- [Manager.java](src/com/pao/laboratory03/exercise3/model/Manager.java) — `super(name, salariuBaza)` pentru [Angajat](src/com/pao/laboratory03/exercise3/model/Angajat.java)
+- [Dog.java](src/com/pao/laboratory03/exercise4/model/Dog.java), [Cat.java](src/com/pao/laboratory03/exercise4/model/Cat.java), [Parrot.java](src/com/pao/laboratory03/exercise4/model/Parrot.java) — `super(name, age)` pentru [Animal](src/com/pao/laboratory03/exercise4/model/Animal.java)
+
+**b) Apelarea unei metode din părinte** — când vrei să extinzi (nu să înlocuiești) comportamentul:
 ```java
-Map<String, List<String>> groups = new HashMap<>();
-groups.computeIfAbsent("PAOJ", k -> new ArrayList<>()).add("Ana");
-```
-
-Cheile trebuie să aibă `equals()`/`hashCode()` corecte — vezi [Lab 02 FAQ #4](src/com/pao/laboratory02/Readme.md).
-
-</details>
-
-<details>
-<summary><b>2. Ce este un enum și când îl folosesc?</b></summary>
-
-Enum = set **fix și finit** de constante singleton.
-
-**Folosește când:** set fix de valori (zile, stări, priorități), vrei type safety, vrei date/comportament pe constantă.
-
-**Enum cu câmpuri și metode abstracte:**
-```java
-public enum Priority {
-    LOW(1) {
-        @Override public String getEmoji() { return "🟢"; }
-    },
-    HIGH(3) {
-        @Override public String getEmoji() { return "🔴"; }
-    };
-
-    private final int level;
-    Priority(int level) { this.level = level; }
-    public int getLevel() { return level; }
-    public abstract String getEmoji();
+@Override
+public void someMethod() {
+    super.someMethod();  // comportament părinte
+    // + comportament suplimentar
 }
 ```
 
-**Reguli:** Constructor implicit privat · Comparare cu `==` · `values()` = toate constantele · `valueOf("HIGH")` = String → enum.
+**c) Accesarea unui câmp din părinte** — `super.field` (rar necesar, de obicei folosești getteri):
+```java
+String parentName = super.name;  // dacă subclasa are și ea un câmp 'name'
+```
+
+**Regulă de aur:** Dacă subclasa are constructor, **trebuie** să apelezi `super(...)` sau `this(...)` (implicit Java adaugă `super()` dacă nu specifici nimic, dar constructorul fără parametri trebuie să existe în părinte).
 
 </details>
 
 <details>
-<summary><b>3. Checked vs unchecked exceptions?</b></summary>
+<summary><b>2. Care este diferența între clasă abstractă și interfață?</b></summary>
 
-| | Checked | Unchecked |
-|---|---------|-----------|
-| **Superclasă** | `Exception` (dar NU `RuntimeException`) | `RuntimeException` |
-| **Compilatorul forțează** | ✅ Da | ❌ Nu |
-| **Cauza** | Condiții externe (fișier, rețea) | Bug-uri (null, index greșit) |
-| **Custom** | `extends Exception` | `extends RuntimeException` |
+| | Clasă abstractă | Interfață |
+|---|----------------|-----------|
+| **Instanțiere** | ❌ Nu se instanțiază direct | ❌ Nu se instanțiază direct |
+| **Metode abstracte** | ✅ Da (fără corp) | ✅ Da (implicit abstract) |
+| **Metode concrete** | ✅ Da (cu implementare) | ✅ Da (din Java 8: `default`, `static`) |
+| **Câmpuri** | ✅ Orice tip (instance, static) | ⚠️ Doar `public static final` (constante) |
+| **Constructor** | ✅ Da (apelat cu `super`) | ❌ Nu |
+| **Moștenire** | 🔢 1 singură clasă (`extends`) | ♾️ Multiple (`implements`) |
+| **Când folosești** | Relație **IS-A** cu cod comun | Contract / capabilitate (**CAN-DO**) |
 
-**Practică:** Pentru excepții custom, de obicei `extends RuntimeException` — mai simplu, nu poluează semnăturile.
+**Exemplu din laborator:**
+- Clasă abstractă: [Angajat](src/com/pao/laboratory03/exercise3/model/Angajat.java) — cod comun + metodă abstractă `salariuTotal()`
+- Interfață: [Describable](src/com/pao/laboratory03/exercise4/model/Describable.java) — contract simplu `String describe()`
+
+**Caz special:** [Animal](src/com/pao/laboratory03/exercise4/model/Animal.java) este clasă abstractă care **implementează** interfața `Describable` → combină ambele concepte.
 
 </details>
 
 <details>
-<summary><b>4. Când creez o excepție custom?</b></summary>
+<summary><b>3. Când și de ce folosesc <code>@Override</code>?</b></summary>
 
-**Da:** excepțiile standard nu exprimă problema · vrei catch diferențiat · vrei câmpuri extra.
+`@Override` este o **adnotare opțională** dar **recomandată** care marchează că metoda suprascrie o metodă din părinte sau interfață. Beneficii:
 
-**Nu:** `IllegalArgumentException` exprimă deja problema.
+1. **Detectează erori la compilare** — dacă greșești semnătura (nume, parametri, tip returnat), compilatorul semnalează eroarea
+2. **Documentare** — arată clar intenția că metoda nu este nouă, ci suprascrie comportamentul
+3. **Refactorizări sigure** — dacă metoda din părinte se schimbă, primești eroare de compilare
+
+**Exemplu:**
+```java
+@Override
+public double area() {  // suprascrie Shape.area()
+    return Math.PI * radius * radius;
+}
+```
+
+Găsești `@Override` în toate exercițiile: [Circle.java](src/com/pao/laboratory03/exercise1/Circle.java), [Rectangle.java](src/com/pao/laboratory03/exercise1/Rectangle.java), [Book.java](src/com/pao/laboratory03/equalshashcode/Book.java), [Dog.java](src/com/pao/laboratory03/exercise4/model/Dog.java), etc.
+
+**Regulă:** Folosește **întotdeauna** `@Override` când suprascrii `toString()`, `equals()`, `hashCode()`, sau orice metodă din părinte/interfață.
+
+</details>
+
+<details>
+<summary><b>4. De ce trebuie să suprascriu <code>equals()</code> ȘI <code>hashCode()</code> împreună?</b></summary>
+
+**Contract Java:** Dacă `a.equals(b) == true`, atunci **obligatoriu** `a.hashCode() == b.hashCode()`.
+
+**Consecințe dacă nu respecți contractul:**
+- `HashSet` / `HashMap` nu vor funcționa corect — duplicate "invizibile", căutări eșuate
+- Obiecte considerate egale de `equals()` ajung în bucket-uri diferite
+
+**Exemplu din [Book.java](src/com/pao/laboratory03/equalshashcode/Book.java):**
+```java
+@Override
+public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Book book = (Book) o;
+    return Objects.equals(name, book.name);  // egalitate pe 'name'
+}
+
+@Override
+public int hashCode() {
+    return Objects.hash(name);  // ACELAȘI câmp ca în equals
+}
+```
+
+**Regulă de aur:** Folosește **aceleași câmpuri** în ambele metode. IntelliJ poate genera automat (`Alt+Insert` → `equals() and hashCode()`).
+
+Vezi demo în [equalshashcode/Main.java](src/com/pao/laboratory03/equalshashcode/Main.java) — ce se întâmplă cu `HashSet` când override-ul lipsește.
+
+</details>
+
+<details>
+<summary><b>5. Care este diferența între <code>==</code> și <code>.equals()</code>?</b></summary>
+
+| Operator | Ce compară | Exemplu |
+|----------|------------|---------|
+| `==` | **Referințe în memorie** | `book1 == book2` → `true` doar dacă sunt **exact același obiect** |
+| `.equals()` | **Conținut logic** | `book1.equals(book2)` → `true` dacă au **aceleași valori** (după criteriul din `equals()`) |
+
+**Demo din [equalshashcode/Main.java](src/com/pao/laboratory03/equalshashcode/Main.java):**
+```java
+Book book1 = new Book("Java", 500);
+Book book2 = new Book("Java", 300);
+Book book3 = book1;
+
+book1 == book2  // false (obiecte diferite în memorie)
+book1 == book3  // true  (aceeași referință)
+book1.equals(book2)  // true (același name → vezi Book.equals)
+```
+
+**Reguli:**
+- Pentru **primitive** (`int`, `double`) → folosește doar `==`
+- Pentru **obiecte** → folosește `.equals()` pentru compararea conținutului
+- **Excepție:** `String` se poate compara cu `==` doar pentru literale identice (evită!)
+
+</details>
+
+<details>
+<summary><b>6. Ce înseamnă că o clasă este imutabilă? De ce este utilă?</b></summary>
+
+O clasă **imutabilă** = obiectele create **nu se mai pot modifica** după instanțiere.
+
+**Reguli pentru a crea o clasă imutabilă** (vezi [ImmutableDog.java](src/com/pao/laboratory03/immutable/ImmutableDog.java)):
+1. Declară clasa `final` — previne extinderea (subclasele ar putea adăuga mutabilitate)
+2. Toate câmpurile `private final`
+3. **Fără setteri** — doar getteri
+4. Inițializare doar prin constructor
+5. Dacă ai câmpuri **mutable** (liste, date) → returnează **copii defensive** în getteri
 
 ```java
-public class StudentNotFoundException extends RuntimeException {
-    public StudentNotFoundException(String message) {
-        super(message);  // super(msg) → Throwable.getMessage()
+public final class ImmutableDog {
+    private final String name;
+    private final int age;
+    
+    public ImmutableDog(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    public String getName() { return name; }  // doar getteri, fără setteri
+    public int getAge() { return age; }
+}
+```
+
+**Beneficii:**
+- ✅ **Thread-safe** — folosit în aplicații concurente fără sincronizare
+- ✅ **Sigur** — nu se modifică accidental
+- ✅ **HashSet/HashMap key** — hash-ul rămâne constant
+
+**Exemple din Java:** `String`, `Integer`, `LocalDate`, `BigDecimal` — toate sunt imutabile!
+
+</details>
+
+<details>
+<summary><b>7. Când folosesc <code>ArrayList</code> vs <code>HashSet</code> vs <code>TreeSet</code>?</b></summary>
+
+| Colecție | Caracteristici | Când folosești |
+|----------|---------------|----------------|
+| **ArrayList** | • Ordine de inserare<br>• Permite duplicate<br>• Acces prin index `get(i)`<br>• Performanță: O(1) acces, O(n) căutare | Liste cu ordine importantă, acces frecvent la poziții specifice |
+| **HashSet** | • Ordine imprevizibilă<br>• **Fără duplicate**<br>• Necesită `equals`/`hashCode`<br>• Performanță: O(1) add/contains | Verificare rapidă apartenență, eliminare duplicate |
+| **TreeSet** | • **Sortat automat** (alfabetic, numeric)<br>• Fără duplicate<br>• Necesită `Comparable` sau `Comparator`<br>• Performanță: O(log n) | Când ai nevoie de colecție sortată automat |
+
+**Demo:** Vezi [collections/Main.java](src/com/pao/laboratory03/collections/Main.java) pentru exemple practice.
+
+**Alegere rapidă:**
+- Trebuie să păstrezi **ordine**? → `ArrayList`
+- Trebuie să elimini **duplicate**? → `HashSet` / `TreeSet`
+- Trebuie **sortat**? → `TreeSet`
+
+</details>
+
+<details>
+<summary><b>8. Ce este polimorfismul? Cum funcționează în practică?</b></summary>
+
+**Polimorfism** = o variabilă de tip **părinte** poate stoca un obiect de tip **copil**, iar la rulare se apelează implementarea **reală** (a copilului), nu cea din părinte.
+
+**Exemplu din [abstractclasses/Main.java](src/com/pao/laboratory03/abstractclasses/Main.java):**
+```java
+DBConnection conn1 = new MySqlConnection("jdbc:mysql://...");  // upcasting
+DBConnection conn2 = new OracleConnection("jdbc:oracle://...");
+
+conn1.connectToDb();  // apelează MySqlConnection.connectToDb()
+conn2.connectToDb();  // apelează OracleConnection.connectToDb()
+
+// Array polimorfic:
+DBConnection[] connections = {conn1, conn2};
+for (DBConnection conn : connections) {
+    conn.connectToDb();  // comportament specific fiecărui tip real
+}
+```
+
+**De ce este util?**
+- ✅ **Cod generic** — lucrezi cu tipul abstract, nu trebuie să știi tipul concret
+- ✅ **Extensibilitate** — adaugi noi subclase fără a modifica codul existent
+- ✅ **Design patterns** — Strategy, Factory, Template Method se bazează pe polimorfism
+
+Vezi și [exercise1/Main.java](src/com/pao/laboratory03/exercise1/Main.java) — calculează suma ariilor pentru orice `Shape[]` fără să știe tipul exact (Circle/Rectangle).
+
+</details>
+
+<details>
+<summary><b>9. Ce înseamnă "constructor chaining" și care sunt regulile?</b></summary>
+
+**Constructor chaining** = apelarea unui constructor din alt constructor (din aceeași clasă sau din părinte).
+
+**Reguli obligatorii:**
+1. `super(...)` sau `this(...)` **TREBUIE să fie prima instrucțiune** în constructor
+2. Nu poți apela ambele în același constructor — fie `super`, fie `this`
+3. Dacă nu specifici `super(...)`, Java adaugă automat `super()` (constructor fără parametri)
+4. Dacă părinte **nu are** constructor fără parametri → **eroare de compilare** (trebuie apel explicit `super(args)`)
+
+**Exemplu `this(...)` chaining:**
+```java
+public class Dog {
+    private String name;
+    private int age;
+    
+    public Dog(String name) {
+        this(name, 0);  // apelează constructorul cu 2 parametri
+    }
+    
+    public Dog(String name, int age) {
+        this.name = name;
+        this.age = age;
     }
 }
 ```
 
-Pattern-ul `super(message)` e același ca `super(name, age)` din [Lab 02 Dog.java](src/com/pao/laboratory02/exercise4/model/Dog.java).
+**Exemplu `super(...)` chaining:**
+Vezi [Circle.java](src/com/pao/laboratory03/exercise1/Circle.java), [Programator.java](src/com/pao/laboratory03/exercise3/model/Programator.java) — toate apelează `super(...)` pentru a inițializa câmpurile din părinte.
 
 </details>
 
 <details>
-<summary><b>5. Ce face <code>finally</code>?</b></summary>
+<summary><b>10. Pot modifica un obiect dintr-un <code>HashSet</code> după ce l-am adăugat?</b></summary>
 
-Se execută **mereu** — și dacă `try` reușește, și dacă `catch` prinde ceva, și chiar dacă ai `return`!
+**NU!** Modificarea unui obiect după inserare în `HashSet`/`HashMap` **corupe** structura internă.
 
+**De ce?** `HashSet` folosește `hashCode()` pentru a determina bucket-ul unde se stochează obiectul. Dacă modifici câmpurile folosite în `hashCode()`, obiectul va fi în bucket-ul greșit → nu mai poate fi găsit cu `contains()`, `remove()` va eșua.
+
+**Exemplu problematic:**
 ```java
-try {
-    return;
-} finally {
-    System.out.println("se execută oricum!");
+Book book = new Book("Java", 500);
+Set<Book> set = new HashSet<>();
+set.add(book);
+
+book.setName("Python");  // ⚠️ PERICOL! Hash-ul s-a schimbat!
+set.contains(book);  // poate returna false (bucket greșit)
+```
+
+**Soluții:**
+1. **Folosește clase imutabile** ca keys — vezi [ImmutableDog.java](src/com/pao/laboratory03/immutable/ImmutableDog.java)
+2. **Nu modifica** obiectele după inserare în `HashSet`/`HashMap`
+3. Dacă trebuie modificat → **remove()** → modifică → **add()** înapoi
+
+</details>
+
+<details>
+<summary><b>11. De ce <code>String</code> este imutabil? Cum folosesc <code>StringBuilder</code>?</b></summary>
+
+`String` este **imutabil** pentru siguranță (thread-safe, hash stabil pentru `HashMap` keys) și optimizare (string pool).
+
+**Problemă:** Concatenări repetate creează obiecte noi la fiecare operație:
+```java
+String result = "";
+for (int i = 0; i < 1000; i++) {
+    result += i;  // ⚠️ INEFICIENT — 1000 obiecte temporare
 }
 ```
 
-**Alternativă modernă:** `try-with-resources` — `try (FileReader r = ...) { }`.
-
-</details>
-
-<details>
-<summary><b>6. De ce contează ordinea catch-urilor?</b></summary>
-
-Java intră în **primul** catch care se potrivește. Specific → general, altfel eroare de compilare.
-
+**Soluție:** Folosește `StringBuilder` (mutable, eficient):
 ```java
-// ✅ Corect
-catch (InvalidAgeException e) { ... }    // specific
-catch (RuntimeException e) { ... }       // general
-
-// ❌ Greșit — nu compilează
-catch (RuntimeException e) { ... }       // prinde TOT
-catch (InvalidAgeException e) { ... }    // unreachable!
+StringBuilder sb = new StringBuilder();
+for (int i = 0; i < 1000; i++) {
+    sb.append(i);  // ✅ EFICIENT — modifică același obiect
+}
+String result = sb.toString();
 ```
 
-Multi-catch: `catch (Ex1 | Ex2 e)` — doar dacă NU sunt în relație părinte-copil.
+Vezi benchmark în [strings/Main.java](src/com/pao/laboratory03/strings/Main.java) — diferența poate fi de **100x** viteza pentru concatenări masive!
+
+**Regulă:** Concatenări în **buclă** sau **multe operații** → `StringBuilder`. Concatenare simplă (2-3 stringuri) → `+` este OK.
 
 </details>
 
 <details>
-<summary><b>7. <code>throw</code> vs <code>throws</code>?</b></summary>
+<summary><b>12. Cum funcționează <code>toString()</code> și când ar trebui suprascris?</b></summary>
 
-| | `throw` | `throws` |
-|---|---------|----------|
-| **Ce face** | Aruncă excepție | Declară că metoda poate arunca |
-| **Unde** | Corpul metodei | Semnătura metodei |
-| **Sintaxă** | `throw new MyEx("msg")` | `void m() throws MyEx` |
+`toString()` convertește un obiect în reprezentare text. Implementarea default din `Object` returnează `ClassName@hashCode` (ex: `Book@5e91993f`) — inutil pentru debugging.
 
-`throws` obligatoriu doar pentru checked exceptions.
+**Când suprascrii `toString()`:**
+- ✅ Când vrei să vezi conținutul obiectului în debugging
+- ✅ Când afișezi obiecte cu `System.out.println(obj)`
+- ✅ Când vrei logging comprehensibil
 
-</details>
-
-<details>
-<summary><b>8. Utilizări <code>super</code> în Lab 03</b></summary>
-
-`super` apare în excepții custom — transmite mesajul către `RuntimeException`:
-
-| Clasă | Apel | Părinte |
-|-------|------|---------|
-| `InvalidAgeException` | `super(message)` | `RuntimeException` |
-| `DuplicateEntryException` | `super(message)` | `RuntimeException` |
-| `InvalidStudentException` | `super(message)` | `RuntimeException` |
-| `InvalidGradeException` | `super(message)` | `RuntimeException` |
-| `StudentNotFoundException` | `super(message)` | `RuntimeException` |
-
-Același pattern ca `super(name, age)` din Lab 02. Lista completă → [Lab 02 FAQ #1](src/com/pao/laboratory02/Readme.md).
-
-</details>
-
-<details>
-<summary><b>9. Enum ca cheie în <code>HashMap</code>?</b></summary>
-
-**Da!** Enum-urile sunt ideale — `hashCode()`/`equals()` corecte, imutabile. Java oferă și `EnumMap` optimizat:
-
+**Exemplu din [Book.java](src/com/pao/laboratory03/equalshashcode/Book.java):**
 ```java
-Map<Subject, Double> grades = new EnumMap<>(Subject.class);
-grades.put(Subject.PAOJ, 9.5);
+@Override
+public String toString() {
+    return "Book{name='" + name + "', pages=" + pages + "}";
+}
 ```
+
+**Pattern comun** — include clasa și câmpurile importante:
+```java
+return getClass().getSimpleName() + "{field1=" + field1 + ", field2=" + field2 + "}";
+```
+
+Vezi toate clasele model din laborator: [Shape.java](src/com/pao/laboratory03/exercise1/Shape.java), [Angajat.java](src/com/pao/laboratory03/exercise3/model/Angajat.java), [Animal.java](src/com/pao/laboratory03/exercise4/model/Animal.java) — toate au `toString()` suprascris.
 
 </details>
 
 <details>
-<summary><b>10. <code>List</code> vs <code>Set</code> vs <code>Map</code>?</b></summary>
+<summary><b>13. Ce înseamnă "upcasting" și "downcasting"?</b></summary>
 
-```
-Perechi cheie → valoare?  → Map (HashMap / TreeMap)
-Unicitate?                → Set (HashSet / TreeSet)
-Ordine + duplicate?       → ArrayList
-Sortare automată?         → TreeSet / TreeMap
+**Upcasting** = conversie automată de la subclasă → superclasă (întotdeauna safe):
+```java
+Circle circle = new Circle(5.0);
+Shape shape = circle;  // upcasting implicit — Circle IS-A Shape
 ```
 
-**Proiect:** minim 2 colecții diferite, una sortată → `ArrayList` + `TreeMap`/`TreeSet`.
+**Downcasting** = conversie explicită de la superclasă → subclasă (poate eșua la runtime):
+```java
+Shape shape = new Circle(5.0);
+Circle circle = (Circle) shape;  // downcasting explicit — verifică cu instanceof
+
+// ⚠️ PERICOL:
+Shape shape2 = new Rectangle(3, 4);
+Circle circle2 = (Circle) shape2;  // ❌ ClassCastException la runtime!
+```
+
+**Verificare sigură:**
+```java
+if (shape instanceof Circle) {
+    Circle circle = (Circle) shape;  // ✅ sigur
+    // folosește metode specifice Circle
+}
+```
+
+**Exemplu din laborator:** [abstractclasses/Main.java](src/com/pao/laboratory03/abstractclasses/Main.java) — array `DBConnection[]` conține obiecte `MySqlConnection` și `OracleConnection` (upcasting).
 
 </details>
 
----
+<details>
+<summary><b>14. Cum parcurg o colecție? Care este diferența între metodele de iterare?</b></summary>
+
+**4 metode de parcurgere** (vezi [collections/Main.java](src/com/pao/laboratory03/collections/Main.java)):
+
+**a) For clasic** — doar pentru liste cu index (`ArrayList`, array-uri):
+```java
+for (int i = 0; i < list.size(); i++) {
+    String item = list.get(i);
+}
+```
+
+**b) Enhanced for** (for-each) — pentru orice colecție:
+```java
+for (String item : list) {
+    System.out.println(item);
+}
+```
+
+**c) forEach + lambda** (Java 8+) — cel mai concis:
+```java
+list.forEach(item -> System.out.println(item));
+// sau method reference:
+list.forEach(System.out::println);
+```
+
+**d) Iterator** — când vrei să ștergi elemente în timp ce parcurgi:
+```java
+Iterator<String> it = list.iterator();
+while (it.hasNext()) {
+    String item = it.next();
+    if (condition) it.remove();  // ✅ safe removal
+}
+```
+
+**Recomandare:** Folosește **enhanced for** sau **forEach** în majoritatea cazurilor — sunt concise și sigure.
+
+</details>
 
 <details>
-<summary><h2>Legătura cu proiectul individual</h2></summary>
+<summary><b>15. Pot avea o clasă abstractă fără metode abstracte?</b></summary>
 
-| Cerință proiect | Ce ai învățat |
-|----------------|---------------|
-| 2 colecții diferite, 1 sortată | `HashMap`/`TreeMap` + `ArrayList` |
-| 8 tipuri de obiecte | Enum-uri = tipuri noi |
-| 10 acțiuni/interogări | Serviciu CRUD + validare cu excepții |
-| Clasă serviciu | Singleton din Lab 01-03 |
-| Validare date | Excepții custom |
+**DA!** O clasă poate fi declarată `abstract` chiar dacă toate metodele sunt concrete.
 
-**După Lab 03 poți începe Etapa I a proiectului!**
+**Scop:** Previi instanțierea directă — vrei ca utilizatorii să folosească doar subclasele concrete.
+
+**Exemplu conceptual:**
+```java
+public abstract class Vehicle {  // abstract, dar fără metode abstracte
+    private String brand;
+    
+    public Vehicle(String brand) { this.brand = brand; }
+    
+    public void start() {  // metodă concretă
+        System.out.println(brand + " pornește motorul");
+    }
+}
+
+// ❌ new Vehicle("Toyota");  // eroare — clasă abstractă
+// ✅ class Car extends Vehicle { ... }  // OK
+```
+
+**Când este util:**
+- Design pattern **Template Method** — structură fixă în părinte, detalii în copii
+- Când clasa are sens doar ca **bază conceptuală**, nu standalone
+
+În laborator, [DBConnection](src/com/pao/laboratory03/abstractclasses/DBConnection.java), [Angajat](src/com/pao/laboratory03/exercise3/model/Angajat.java), [Animal](src/com/pao/laboratory03/exercise4/model/Animal.java) au **ambele** metode abstracte și concrete.
+
+</details>
+
+<details>
+<summary><b>16. Ce este un Singleton și cum îl implementez?</b></summary>
+
+**Singleton** = design pattern care garantează că o clasă are **exact o singură instanță** în întreaga aplicație.
+
+**Implementare clasică:**
+```java
+public class ZooService {
+    private static ZooService instance;  // instanță unică
+    
+    private ZooService() {  // constructor PRIVAT — nu se poate apela din exterior
+        // inițializare
+    }
+    
+    public static ZooService getInstance() {  // punct de acces global
+        if (instance == null) {
+            instance = new ZooService();
+        }
+        return instance;
+    }
+}
+
+// Utilizare:
+ZooService service = ZooService.getInstance();  // prima dată creează
+ZooService service2 = ZooService.getInstance();  // returnează aceeași instanță
+// service == service2 → true
+```
+
+**Când folosești:**
+- Servicii globale (logging, configurare, conexiuni DB)
+- Resurse partajate (cache, pool-uri)
+
+**În laborator:** Implementezi Singleton în [ZooService.java](src/com/pao/laboratory03/exercise4/service/ZooService.java) — o singură instanță gestionează toți animalele din Zoo.
+
+**Alternativă modernă:** În aplicații mari, folosește **Dependency Injection** (Spring) în loc de Singleton manual.
 
 </details>
 

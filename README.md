@@ -8,12 +8,13 @@ Materiale și resurse pentru cursul **Programare Avansată pe Obiecte în Java**
 
 | Laborator                                          | Subiect                                                          |
 |----------------------------------------------------|------------------------------------------------------------------|
-| [laboratory00](src/com/pao/laboratory00/Readme.md) | Primul program, array-uri, Scanner                               |
-| [laboratory01](src/com/pao/laboratory01/Readme.md) | Clase, încapsulare, Singleton, Comparator                        |
-| [laboratory02](src/com/pao/laboratory02/Readme.md) | Moștenire, clase abstracte, interfețe, equals/hashCode, colecții |
-| [laboratory03](src/com/pao/laboratory03/Readme.md) | Map, enum-uri, excepții custom                                   |
+| [laboratory01](src/com/pao/laboratory01/Readme.md) | Primul program, array-uri, Scanner                               |
+| [laboratory02](src/com/pao/laboratory02/Readme.md) | Clase, încapsulare, Singleton, Comparator                        |
+| [laboratory03](src/com/pao/laboratory03/Readme.md) | Moștenire, clase abstracte, interfețe, equals/hashCode, colecții |
+| [laboratory04](src/com/pao/laboratory04/Readme.md) | Map, enum-uri, excepții custom                                   |
+| [laboratory05](src/com/pao/laboratory05/Readme.md) | Records, Comparable aprofundat, Comparator multiplu              |
 
-Începând cu **laboratory03**, soluțiile se trimit pe GitHub la un fork personal al acestui repo.
+Începând cu **laboratory04**, soluțiile se trimit pe GitHub la un fork personal al acestui repo.
 **Data limită:** miercuri, ora 23:59, în fiecare săptămână.
 
 Mai jos găsești:
@@ -29,6 +30,18 @@ Mai jos găsești:
 - ✅ Cont pe [github.com](https://github.com) (gratuit)
 - ✅ Git instalat — verifică cu `git --version` ([descarcă de aici](https://git-scm.com/downloads) dacă nu ai)
 - ✅ Autentificare configurată — [GitHub CLI](https://cli.github.com/) (`gh auth login`) sau SSH key
+
+Dacă vrei să te conectezi ușor la GitHub din terminal, recomand să instalezi și
+configurezi [GitHub CLI](https://cli.github.com/):
+
+După aceea, scrii
+
+```bash
+gh auth login
+```
+
+Apeși Enter, Enter, Y, Enter, Enter, și te autentifici în browser.
+După ce te întorci în terminal, ar trebui să vezi mesajul "Logged in to github.com as USERNAME".
 
 ## 1. Cum trimiți soluțiile
 
@@ -103,12 +116,11 @@ git remote -v
 
 ✅ **Gata!** Ai acum un repo local conectat la două remote-uri: `origin` (fork-ul tău) și `upstream` (repo-ul cursului).
 
-
 ### Partea 2 - Flux săptămânal
 
 **1. Preiei branch-ul nou de pe `upstream`:**
 
-> Vei folosi `lab4` în loc de `labX` pentru laboratory03, `lab5` pentru laboratory04 etc.
+> Vei folosi `lab5` în loc de `labX` pentru laboratory04, `lab6` pentru laboratory05 etc.
 
 ```bash
 git fetch upstream labX   # înlocuiește X cu numărul lab (ex: lab04)
@@ -150,7 +162,7 @@ Trimite link-ul fork-ului pe formularul următor, ca să știm cui oferim puncta
 
 - **10 prezențe obligatorii** din 14 laboratoare
 - Laburile 1–3 sunt punctate pentru prezență + soluție completă
-- La Lab 03, exercițiul bonus era opțional — absența lui nu scade punctajul
+- La Lab 04, exercițiul bonus era opțional — absența lui nu scade punctajul
 
 ### Laboratoarele 4–14
 
@@ -163,7 +175,7 @@ Fiecare laborator valorează **2.5%** din nota finală:
 
 ---
 
-## Cum trimiți soluțiile (începând cu laboratory03)
+## Cum trimiți soluțiile (începând cu laboratory04)
 
 [//]: # (> 🎬 **Video tutorial:** [Cum faci fork și trimiți soluțiile — YouTube]&#40;https://www.youtube.com/watch?v=PLACEHOLDER&#41;)
 
@@ -214,10 +226,8 @@ git push -u origin main
 
 ```bash
 git remote -v
-# origin   https://github.com/USERNAME-UL-TAU/paoj-2026.git                   <- (fork-ul tău)
-# origin   https://github.com/USERNAME-UL-TAU/paoj-2026.git                   <- (fork-ul tău)
-# upstream         https://github.com/stefaneduard-deaconu/paoj-2026.git      <- (repo-ul cursului)
-# upstream         https://github.com/stefaneduard-deaconu/paoj-2026.git      <- (repo-ul cursului)
+# origin    https://github.com/USERNAME-UL-TAU/paoj-2026.git          (fork-ul tău)
+# upstream  https://github.com/stefaneduard-deaconu/paoj-2026.git    (repo-ul cursului)
 ```
 
 ✅ **Gata!** Acum ai aceeași configurație ca cei care încep de la zero.
@@ -258,8 +268,8 @@ git remote -v
 **1. Actualizează** cu materialele noi de la curs:
 
 ```bash
-git fetch upstream labX  # e.g. lab4 for laboratory03 of March 16-17th
-git checkout labX        # e.g. lab4 for laboratory03 of March 16-17th
+git fetch upstream labX  # e.g. lab5 for laboratory04 of March 23-24th
+git checkout labX        # e.g. lab5 for laboratory04 of March 23-24th
 ```
 
 **2. Lucrează** la exerciții — creează clase, completează TODO-uri.
@@ -268,7 +278,7 @@ git checkout labX        # e.g. lab4 for laboratory03 of March 16-17th
 
 ```bash
 git add .
-git commit -m "Lab4: exercitiile 1-4 completate"
+git commit -m "Lab5: exercitiile 1-4 completate"
 git push origin labX  # origin is your fork.
 ```
 
@@ -344,8 +354,8 @@ java NumeleFisierului         # fără extensia .class
 
 ```bash
 cd src
-javac com/pao/laboratory00/Main.java
-java com.pao.laboratory00.Main
+javac com/pao/laboratory01/Main.java
+java com.pao.laboratory01.Main
 ```
 
 > Compilarea folosește `/` (sau `\` pe Windows), rularea folosește `.` (puncte).
@@ -357,6 +367,6 @@ java com.pao.laboratory00.Main
 | Verificare Java                   | `java -version`                 |
 | Compilare (fără pachet)           | `javac Main.java`               |
 | Rulare (fără pachet)              | `java Main`                     |
-| Compilare (cu pachet, din `src/`) | `javac com/pao/lab00/Main.java` |
-| Rulare (cu pachet, din `src/`)    | `java com.pao.lab00.Main`       |
+| Compilare (cu pachet, din `src/`) | `javac com/pao/lab01/Main.java` |
+| Rulare (cu pachet, din `src/`)    | `java com.pao.lab01.Main`       |
 

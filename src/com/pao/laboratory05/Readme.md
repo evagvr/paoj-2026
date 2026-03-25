@@ -1,3 +1,4 @@
+
 # Laboratory 04 — Records, Comparable aprofundat, Comparator multiplu
 
 > **Pachet:** `com.pao.laboratory05` · **Curs:** 01–04 · 

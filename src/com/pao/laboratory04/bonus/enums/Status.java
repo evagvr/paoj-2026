@@ -1,4 +1,4 @@
-package com.pao.laboratory03.bonus.enums;
+package com.pao.laboratory04.bonus.enums;
 
 public enum Status {
     TODO {

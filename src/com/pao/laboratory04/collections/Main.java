@@ -1,4 +1,6 @@
-package com.pao.laboratory03.collections;
+package com.pao.laboratory04.collections;
+
+import java.util.*;
 
 /**
  * Exercițiul 1 — Colecții: HashMap și TreeMap
@@ -51,6 +53,32 @@ package com.pao.laboratory03.collections;
 public class Main {
     public static void main(String[] args) {
         // TODO: implementează cele 3 părți de mai sus
+        System.out.println("=== PARTEA A: HashMap — frecvența cuvintelor ===");
+        String[] words = {"java", "python", "java", "c++", "python", "java", "rust", "c++", "go"};
+        Map<String, Integer> wordFrequency = new HashMap<>();
+        for (String word : words) {
+            wordFrequency.put(word, wordFrequency.getOrDefault(word, 0) + 1);
+        }
+        System.out.println("Frecventa: " + wordFrequency);
+        System.out.println("Contine 'rust'? " + wordFrequency.containsKey("rust"));
+        System.out.println("Chei: " + wordFrequency.keySet());
+        System.out.println("Valori: " + wordFrequency.values());
+        for (Map.Entry<String, Integer> entry : wordFrequency.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
+        System.out.println("\n=== PARTEA B: TreeMap — sortare automata ===");
+        TreeMap<String, Integer> sortedWordFrequency = new TreeMap<>(wordFrequency);
+        System.out.println("Sortat: " + sortedWordFrequency);
+        System.out.println("Prima cheie: " + sortedWordFrequency.firstKey());
+        System.out.println("Ultima cheie: " + sortedWordFrequency.lastKey());
+
+        System.out.println("\n=== PARTEA C: Map cu obiecte ===");
+        Map<String, List<String>> courseStudents = new HashMap<>();
+        courseStudents.put("PAOJ", new ArrayList<>(Arrays.asList("Ana", "Mihai", "Ion")));
+        courseStudents.put("BD", new ArrayList<>(Arrays.asList("Ana", "Elena")));
+        System.out.println("Studenti la PAOJ: "+ courseStudents.get("PAOJ"));
+        courseStudents.get("BD").add("George");
+        System.out.println("Studenti la BD (actualizat): " + courseStudents.get("BD"));
     }
 }
 

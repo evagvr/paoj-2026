@@ -1,4 +1,4 @@
-package com.pao.laboratory03.exercise.exception;
+package com.pao.laboratory04.exercise.exception;
 
 public class StudentNotFoundException extends RuntimeException {
     public StudentNotFoundException(String message) {

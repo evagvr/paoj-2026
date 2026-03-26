@@ -1,11 +1,11 @@
-package com.pao.laboratory03.bonus.service;
+package com.pao.laboratory04.bonus.service;
 
-import com.pao.laboratory03.bonus.enums.Priority;
-import com.pao.laboratory03.bonus.enums.Status;
-import com.pao.laboratory03.bonus.model.Task;
-import com.pao.laboratory03.bonus.exceptions.DuplicateTaskException;
-import com.pao.laboratory03.bonus.exceptions.InvalidTransitionException;
-import com.pao.laboratory03.bonus.exceptions.TaskNotFoundException;
+import com.pao.laboratory04.bonus.enums.Priority;
+import com.pao.laboratory04.bonus.enums.Status;
+import com.pao.laboratory04.bonus.model.Task;
+import com.pao.laboratory04.bonus.exceptions.DuplicateTaskException;
+import com.pao.laboratory04.bonus.exceptions.InvalidTransitionException;
+import com.pao.laboratory04.bonus.exceptions.TaskNotFoundException;
 
 import java.util.*;
 import java.util.stream.Collectors;

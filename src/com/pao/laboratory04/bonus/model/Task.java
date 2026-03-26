@@ -1,6 +1,6 @@
-package com.pao.laboratory03.bonus.model;
-import com.pao.laboratory03.bonus.enums.Status;
-import com.pao.laboratory03.bonus.enums.Priority;
+package com.pao.laboratory04.bonus.model;
+import com.pao.laboratory04.bonus.enums.Status;
+import com.pao.laboratory04.bonus.enums.Priority;
 public class Task {
     private final String id;
     private final String title;

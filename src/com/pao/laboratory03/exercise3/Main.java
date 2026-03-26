@@ -1,4 +1,4 @@
-package com.pao.laboratory02.exercise3;
+package com.pao.laboratory03.exercise3;
 
 import com.pao.laboratory02.exercise3.model.Manager;
 import com.pao.laboratory02.exercise3.model.Programator;

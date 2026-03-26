@@ -1,6 +1,6 @@
 package com.pao.laboratory03.exercise;
-import com.pao.laboratory03.exercise.model.Subject;
-import com.pao.laboratory03.exercise.service.StudentService;
+import com.pao.laboratory04.exercise.model.Subject;
+import com.pao.laboratory04.exercise.service.StudentService;
 
 import java.util.Arrays;
 import java.util.Map;

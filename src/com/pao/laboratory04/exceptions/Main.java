@@ -1,4 +1,4 @@
-package com.pao.laboratory03.exceptions;
+package com.pao.laboratory04.exceptions;
 
 /**
  * Exercițiul 3 — Excepții (checked, unchecked, custom)

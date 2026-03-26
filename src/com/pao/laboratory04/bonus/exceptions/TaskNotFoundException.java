@@ -1,4 +1,4 @@
-package com.pao.laboratory03.bonus.exceptions;
+package com.pao.laboratory04.bonus.exceptions;
 
 public class TaskNotFoundException extends RuntimeException {
     public TaskNotFoundException(String message) {

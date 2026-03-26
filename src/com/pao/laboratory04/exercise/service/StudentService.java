@@ -1,8 +1,8 @@
-package com.pao.laboratory03.exercise.service;
+package com.pao.laboratory04.exercise.service;
 
-import com.pao.laboratory03.exercise.exception.StudentNotFoundException;
-import com.pao.laboratory03.exercise.model.Student;
-import com.pao.laboratory03.exercise.model.Subject;
+import com.pao.laboratory04.exercise.exception.StudentNotFoundException;
+import com.pao.laboratory04.exercise.model.Student;
+import com.pao.laboratory04.exercise.model.Subject;
 
 import java.util.ArrayList;
 import java.util.HashMap;

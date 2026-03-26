@@ -1,6 +1,6 @@
-package com.pao.laboratory03.exercise.model;
-import com.pao.laboratory03.exceptions.InvalidAgeException;
-import com.pao.laboratory03.exercise.exception.InvalidGradeException;
+package com.pao.laboratory04.exercise.model;
+import com.pao.laboratory04.exceptions.InvalidAgeException;
+import com.pao.laboratory04.exercise.exception.InvalidGradeException;
 import java.util.HashMap;
 import java.util.Map;
 public class Student {

@@ -1,4 +1,4 @@
-package com.pao.laboratory03.bonus;
+package com.pao.laboratory04.bonus;
 
 /**
  * Exercițiul 5 (Bonus) — Sistem de gestiune task-uri cu audit log
@@ -153,12 +153,12 @@ package com.pao.laboratory03.bonus;
  * === Excepții ===
  * TaskNotFoundException: Task-ul 'T999' nu a fost găsit
  */
-import com.pao.laboratory03.bonus.enums.Priority;
-import com.pao.laboratory03.bonus.enums.Status;
-import com.pao.laboratory03.bonus.service.TaskService;
-import com.pao.laboratory03.bonus.exceptions.InvalidTransitionException;
-import com.pao.laboratory03.bonus.exceptions.DuplicateTaskException;
-import com.pao.laboratory03.bonus.exceptions.TaskNotFoundException;
+import com.pao.laboratory04.bonus.enums.Priority;
+import com.pao.laboratory04.bonus.enums.Status;
+import com.pao.laboratory04.bonus.service.TaskService;
+import com.pao.laboratory04.bonus.exceptions.InvalidTransitionException;
+import com.pao.laboratory04.bonus.exceptions.DuplicateTaskException;
+import com.pao.laboratory04.bonus.exceptions.TaskNotFoundException;
 public class Main {
     public static void main(String[] args) {
         // TODO: implementează toți cei 10 pași de mai sus

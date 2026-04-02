@@ -23,7 +23,7 @@ public class Main {
             System.out.println("1. Adaugă angajat");
             System.out.println("2. Listare după salariu");
             System.out.println("3. Caută după departament");
-            System.out.println("4. Afișează audit log");
+            System.out.println("4.Afiseaza audit log");
             System.out.println("0. Ieșire");
             System.out.print("Opțiune: ");
             int optiune = scanner.nextInt();

@@ -14,8 +14,8 @@ import java.util.Arrays;
  *  - Cum lucrăm cu array-uri de obiecte (redimensionare dinamică, sortare)
  *
  *  Rezolvați exercițiile din:
- *    1. com.pao.laboratory01.arrays      → ArrayDemo.java
- *    2. com.pao.laboratory01.exercise    → Car.java, CarService.java, Main.java
+ *    1. com.pao.laboratory02.arrays      → ArrayDemo.java
+ *    2. com.pao.laboratory02.exercise    → Car.java, CarService.java, Main.java
  *
  *  Începeți prin a citi acest fișier și clasele din model/ — apoi treceți la exerciții.
  */

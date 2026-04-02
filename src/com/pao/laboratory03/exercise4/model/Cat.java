@@ -25,10 +25,9 @@ public class Cat extends Animal {
     public Cat(String name, int age) {
         super(name, age);
     }
-
     @Override
     public String sound() {
-        return ""; // TODO: returnează "Miau!"
+        return "Miau!"; // TODO: returnează "Miau!"
     }
 }
 

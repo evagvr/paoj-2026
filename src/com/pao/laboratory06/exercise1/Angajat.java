@@ -2,7 +2,7 @@ package com.pao.laboratory06.exercise1;
 
 import java.util.Scanner;
 
-public class Angajat {
+public class Angajat{
     private String nume;
     private double salariu;
 

@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 public class Main {
     private static final Set<String> HIGH_RISK_COUNTRIES =
@@ -26,6 +27,11 @@ public class Main {
         CHANNEL_SCORE.put("POS", 5);
         CHANNEL_SCORE.put("ATM", 0);
     }
+    private static final Predicate<Transaction> amountOverThreshold = tx -> tx.amount >= 1000;
+    private static final Predicate<Transaction> countryInRisk = tx -> HIGH_RISK_COUNTRIES.contains(tx.country);
+    private static final Predicate<Transaction> channelSuspicious = tx -> Arrays.asList("WEB", "APP", "CRYPTO").contains(tx.channel);
+    private static final Predicate<Transaction> highRiskLogical = amountOverThreshold.or(countryInRisk).or(channelSuspicious);
+    private static final Predicate<Transaction> isFlaggedPredicate = tx -> riskScore(tx) >= 60;
 
     private static final Comparator<Transaction> BY_RISK_DESC_THEN_ID_ASC =
             Comparator.comparingInt(Main::riskScore).reversed().thenComparingInt(t -> t.id);
@@ -108,7 +114,7 @@ public class Main {
                     // Build flagged view and keep deterministic ordering for tests.
                     List<Transaction> flagged = new ArrayList<>();
                     for (Transaction t : all) {
-                        if (isFlagged(t)) {
+                        if (isFlaggedPredicate.test(t)) {
                             flagged.add(t);
                         }
                     }
@@ -154,31 +160,24 @@ public class Main {
     }
 
     private static int riskScore(Transaction tx) {
-        // Composite risk scoring used by CHECK, LIST_FLAGGED and TOP_RISK.
         int score = 0;
+        if (tx.amount >= 5000.0) score += 70;
+        else if (amountOverThreshold.test(tx)) score += 40;
+        else if (tx.amount >= 500.0) score += 20;
 
-        if (tx.amount >= 5000.0) {
-            score += 70;
-        } else if (tx.amount >= 1000.0) {
-            score += 40;
-        } else if (tx.amount >= 500.0) {
-            score += 20;
+        if (tx.amount <= 100.0) score += 5;
+
+        if (highRiskLogical.test(tx)) {
+            if (countryInRisk.test(tx)) {
+                score += 25;
+            }
         }
-
-        if (tx.amount <= 100.0) {
-            score += 5;
-        }
-
-        if (HIGH_RISK_COUNTRIES.contains(tx.country)) {
-            score += 25;
-        }
-
         score += CHANNEL_SCORE.getOrDefault(tx.channel, 0);
         return score;
     }
 
     private static boolean isFlagged(Transaction tx) {
-        return riskScore(tx) >= 60;
+        return isFlaggedPredicate.test(tx);
     }
 
     private static String verdict(int score) {
